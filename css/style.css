@@ -1,30 +1,34 @@
-#kitten1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120px;
-    height: 120px;
-    margin:-60px 0 0 -60px;
+body {
+  background-color:#070d1a;
+  margin: 0;
+  padding 0;
+  width: 100%;
+  height: 100%;
 }
-#kitten2 {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    width: 120px;
-    height: 120px;
-    margin:-60px 0 0 -60px;
+#header {
+  background-color: #070d1a;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
-.image1 {
-  animation:spin 1s linear infinite;
+#cont-title {
+  width: 100%;
+  height: auto;
+  padding-top: 300px;
 }
-.image2 {
-  animation:spin 4s linear infinite;
+#title {
+  font-family: 'Roboto Slab', serif;
+  letter-spacing: 4px;
+  color: #8ea7d8;
+  font-size: 60px;
+  margin: 0 auto;
+  text-align: center;
 }
-.body-red {
-  background-color: red;
+#subtitle {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #8ea7d8;
+  font-size: 24px;
+  margin-top: -16px;
+  margin-right: -390px;
+  text-align: center;
 }
-.body-blue {
-  background-color: blue;
-}
-
-@keyframes spin { 100% {transform:rotate(360deg); } }
