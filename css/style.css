@@ -29,6 +29,9 @@ body {
   color: #8ea7d8;
   font-size: 24px;
   margin-top: -16px;
-  margin-right: -390px;
   text-align: center;
+}
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: #8ea7d8
 }
