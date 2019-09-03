@@ -1,0 +1,30 @@
+#kitten1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    margin:-60px 0 0 -60px;
+}
+#kitten2 {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    margin:-60px 0 0 -60px;
+}
+.image1 {
+  animation:spin 1s linear infinite;
+}
+.image2 {
+  animation:spin 4s linear infinite;
+}
+.body-red {
+  background-color: red;
+}
+.body-blue {
+  background-color: blue;
+}
+
+@keyframes spin { 100% {transform:rotate(360deg); } }

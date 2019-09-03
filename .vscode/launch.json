@@ -1,0 +1,20 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch localhost",
+            "type": "chrome",
+            "request": "attach",
+            "port": 5500,
+            "url": "http://127.0.0.1:5500/script.js",
+            "webRoot": "${workspaceFolder}/wwwroot"
+        },
+        {
+            "name": "Launch script.js",
+            "type": "chrome",
+            "request": "attach",
+            "file": "${workspaceFolder}/script.js"
+        },
+    ]
+}
