@@ -1,44 +1,96 @@
-var makeItRain = function() {
-  //clear out everything
-  $('.rain').empty();
+let rainDrops = [];
+let splashes = [];
+const RAIN_DROP_COUNT = 20;
 
-  var increment = 0;
-  var drops = "";
-  var backDrops = "";
+const RAIN_ANGLE = -0.2;
+const RAIN_MIN_SIZE = 32;
+const RAIN_MAX_SIZE = 80;
+const RAIN_MIN_FALL_SPEED = 8;
+const RAIN_MAX_FALL_SPEED = 24;
 
-  while (increment < 100) {
-    //couple random numbers to use for various randomizations
-    //random number between 98 and 1
-    var randoHundo = (Math.floor(Math.random() * (98 - 1 + 1) + 1));
-    //random number between 5 and 2
-    var randoFiver = (Math.floor(Math.random() * (5 - 2 + 1) + 2));
-    //increment
-    increment += randoFiver;
-    //add in a new raindrop with various randomizations to certain CSS properties
-    drops += '<div class="drop" style="left: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"><div class="stem" style="animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"></div><div class="splat" style="animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"></div></div>';
-    backDrops += '<div class="drop" style="right: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"><div class="stem" style="animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"></div><div class="splat" style="animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"></div></div>';
-  }
-
-  $('.rain.front-row').append(drops);
-  $('.rain.back-row').append(backDrops);
+function setup()  {
+  createCanvas(document.documentElement.clientWidth	, document.documentElement.clientHeight);
+  rainDrops = [...Array(RAIN_DROP_COUNT)].map((unused) => new drop());
 }
 
-$('.splat-toggle.toggle').on('click', function() {
-  $('body').toggleClass('splat-toggle');
-  $('.splat-toggle.toggle').toggleClass('active');
-  makeItRain();
-});
+function draw() {
+  background(0);
+  background('rgba(36, 104, 140, 0.25)');
+  noStroke();
+  fill('rgb(149, 199, 255)');
+  rainDrops.forEach((item) => {
+    item.update();
+    item.show();
+  });
+  noFill();
+  for(let i = splashes.length - 1; i >= 0; i--) {
+    if(!splashes[i].update()) {
+      splashes.splice(i, 1);
+    } else {
+      splashes[i].show(); 
+    }
+  }
+}
 
-$('.back-row-toggle.toggle').on('click', function() {
-  $('body').toggleClass('back-row-toggle');
-  $('.back-row-toggle.toggle').toggleClass('active');
-  makeItRain();
-});
+function drop() {
+  this.reset = function(x, y) {
+    if(x && y) {
+      this.pos = { x: x, y: y };
+    } else {
+      this.pos = { x: random(width + width * 0.25) - width * 0.5, y: -height };
+    }
+    this.impact = false;
+    this.size = random(RAIN_MAX_SIZE) + RAIN_MIN_SIZE;
+    this.width = this.size / 32;
+    this.fallSpeed = map(this.size, RAIN_MIN_SIZE, RAIN_MAX_SIZE + RAIN_MIN_SIZE, RAIN_MIN_FALL_SPEED, RAIN_MAX_FALL_SPEED);
+    
+    this.zClip = map(this.size, RAIN_MIN_SIZE, RAIN_MAX_SIZE + RAIN_MIN_SIZE, 0, height);
+  }
+  // initially try to spread the drops out so they don't fall in waves
+  this.reset(random(width * 2) - width, random(height * 2) - height);
+  
+  this.update = function() {
+    if(!this.impact) {
+      this.pos.x += cos(RAIN_ANGLE + HALF_PI) * this.fallSpeed;
+      this.pos.y += sin(RAIN_ANGLE + HALF_PI) * this.fallSpeed;
 
-$('.single-toggle.toggle').on('click', function() {
-  $('body').toggleClass('single-toggle');
-  $('.single-toggle.toggle').toggleClass('active');
-  makeItRain();
-});
+      if(this.pos.y > this.zClip) {
+        this.impact = true;
+        for(let i = 0; i < random(3) + 1; i++) {
+          splashes.push(new splash(this.pos.x, this.pos.y));
+        }
+      }
+    } else {
+      if(this.size > 0) {
+        this.size -= this.fallSpeed;
+      } else {
+        this.reset();
+      }
+    }
+  }
+  this.show = function() {
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(RAIN_ANGLE);
+    triangle(-this.width, this.width, this.width, this.width, 0, -this.size);
+    pop();
+  }
+}
 
-makeItRain();
+function splash(x, y) {
+  this.pos = { x: x, y: y };
+  this.splashSize = 0;
+  this.alpha = 1;
+  this.splashSpeed = random(map(y, 0, height, 0, 5)) + 2;
+  this.strokeWeight = random(2) + 1;
+  this.update = function() {
+    this.splashSize += this.splashSpeed;
+    this.alpha -= 0.045;
+    return this.alpha > 0;
+  }
+  this.show = function() {
+    strokeWeight(this.strokeWeight);
+    stroke(`rgba(130, 178, 255, ${this.alpha})`);
+    ellipse(this.pos.x, this.pos.y, this.splashSize, this.splashSize * 0.5);
+  }
+}
