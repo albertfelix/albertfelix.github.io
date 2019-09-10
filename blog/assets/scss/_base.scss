@@ -465,6 +465,19 @@ a.dotted-link {
     }
 }
 
+/*Project Tags*/
+.projecttag {
+    font-family: "Lato", arial, sans-serif;
+    font-size: 8px;
+    color: $grey;
+    font-weight: 600;
+    padding-left: 25px;
+    .year {
+        color: lighten($color, 20%);
+        font-weight: 500;
+    }
+}
+
 /* Language Section */
 .languages {
     .item {
@@ -581,3 +594,5 @@ a.dotted-link {
         color: $heart;
     }
 }
+
+

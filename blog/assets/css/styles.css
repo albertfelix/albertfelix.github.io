@@ -522,6 +522,15 @@ a.dotted-link:hover {
   font-weight: 500;
 }
 
+/*Project Tags*/
+.projecttag {
+  font-family: "Lato", arial, sans-serif;
+  font-size: 8px;
+  color: #CE9E46;
+  font-weight: 600;
+  padding-left: 25px;
+}
+
 /* Language Section */
 .languages .item {
   margin-bottom: 15px;
