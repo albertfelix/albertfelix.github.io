@@ -1,3 +1,5 @@
-# albertfelix.github.io
+# [Neona.me](https://neona.me/)
 Personal Github Profile Page
-Visit Neaona.me to view. 
+Visit the site above to view. 
+
+Credit for Theme goes to [Xiaoying Riley](https://themes.3rdwavemedia.com/).
