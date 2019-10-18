@@ -595,6 +595,14 @@ a.dotted-link:hover {
   color: #8EA7D8;
 }
 
+.arrow-right {
+  color: #CE9E46;
+}
+
+.caret-right {
+  color: #CE9E46;
+}
+
 /* Credits */
 .credits ul li {
   margin-bottom: 10px;
